@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import NameAgeList from "./Components/NameAge/NameAgeList";
+import AddForm from "./Components/AddForm/AddForm";
+import { useState } from "react";
+import WarningOverlay from "./Components/UI/WarningOverlay";
 
 function App() {
+  const [userData, setUserData] = useState([{ id: 1, name: "max", age: "20" }]);
+
+  const newUserHandler = (newUser) => {
+    // console.log(newUser);
+
+    setUserData((prevUserData) => {
+      const updatedUserData = [...prevUserData];
+      updatedUserData.unshift(newUser);
+      return updatedUserData;
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+      
+      <div className="App">
+        <WarningOverlay />
+        <AddForm onNewUser={newUserHandler} />
+        <NameAgeList data={userData} />
+      </div>
+    
   );
 }
 
