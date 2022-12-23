@@ -70,16 +70,22 @@ const AddForm = (props) => {
       <form onSubmit={submitHandler}>
         <FormControl>
           <div className="input-control">
-            <label>
+            <label htmlFor="username">
               <b>Username</b>
             </label>
-            <input type="text" onChange={nameHandler} value={newName}></input>
+            <input
+              id="username"
+              type="text"
+              onChange={nameHandler}
+              value={newName}
+            ></input>
           </div>
           <div className="input-control">
-            <label>
+            <label htmlFor="age">
               <b>Age (Years)</b>
             </label>
             <input
+              id="age"
               type="number"
               step="1"
               onChange={ageHandler}
