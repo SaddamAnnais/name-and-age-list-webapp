@@ -8,7 +8,7 @@ const Overlay = styled.div`
   position: absolute;
   top: 0;
   /* display: none; */
-  display: block;
+  display: ${props => props.hide? 'none' : 'block'};
 
   & .warning-dialogue {
     border-radius: 0.5em;
@@ -35,17 +35,16 @@ const Overlay = styled.div`
 `;
 
 const WarningOverlay = (props) => {
+  const closeWarning = () => {
+    props.onChangeWarningState({ state: false, title: "", message: "" });
+  };
+
   return (
-    <Overlay>
+    <Overlay hide={!props.stateObj.state}>
       <div className="warning-dialogue">
-
-          <h2>Test title</h2>
-          <p>
-            Test desc Test descTest descTest descTest descTest descTest descTest
-            descTest descTest descTest descTest descTest descTest desc
-          </p>
-
-        <Button >Okay</Button>
+        <h2>{props.stateObj.title}</h2>
+        <p>{props.stateObj.message}</p>
+        <Button onClick={closeWarning}>Okay</Button>
       </div>
     </Overlay>
   );

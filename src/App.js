@@ -17,15 +17,27 @@ function App() {
     });
   };
 
+  const [warningState, setWarningState] = useState({
+    state: false,
+    title: "",
+    message: "",
+  });
+
+  const changeWarningStateHandler = (stateObj) => setWarningState(stateObj);
+
   return (
-    
-      
-      <div className="App">
-        <WarningOverlay />
-        <AddForm onNewUser={newUserHandler} />
-        <NameAgeList data={userData} />
-      </div>
-    
+    <div className="App">
+      <WarningOverlay
+        stateObj={warningState}
+        onChangeWarningState={changeWarningStateHandler}
+      />
+      ;
+      <AddForm
+        onNewUser={newUserHandler}
+        onChangeWarningState={changeWarningStateHandler}
+      />
+      <NameAgeList data={userData} />
+    </div>
   );
 }
 

@@ -2,7 +2,7 @@ import NameAgeItem from "./NameAgeItem";
 import Wrapper from "../UI/Wrapper";
 
 const NameAgeList = (props) => {
-  console.log(props.data);
+  // console.log(props.data);
   return (
     <Wrapper>
       {props.data.map((user) => {

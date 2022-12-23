@@ -43,10 +43,26 @@ const AddForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const newUser = { id: Math.random(), name: newName, age: newAge };
-    props.onNewUser(newUser);
-    setNewName("");
-    setNewAge("");
+    if (newName.trim().length !== 0 && newAge.trim().length !== 0) {
+      if (parseInt(newAge) > 0) {
+        const newUser = { id: Math.random(), name: newName, age: newAge };
+        props.onNewUser(newUser);
+        setNewName("");
+        setNewAge("");
+      } else {
+        props.onChangeWarningState({
+          state: true,
+          title: "Invalid Input",
+          message: "Please enter a valid age (Age > 0)",
+        });
+      }
+    } else {
+      props.onChangeWarningState({
+        state: true,
+        title: "Invalid Input",
+        message: "Please enter a valid name and age (non-empty values)",
+      });
+    }
   };
 
   return (
