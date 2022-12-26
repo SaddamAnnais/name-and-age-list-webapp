@@ -1,6 +1,6 @@
 import Wrapper from "../UI/Wrapper";
 import styled from "styled-components";
-import { useState } from "react";
+import { useRef } from "react";
 import Button from "../UI/Button";
 
 const FormControl = styled.div`
@@ -31,24 +31,24 @@ const FormControl = styled.div`
 `;
 
 const AddForm = (props) => {
-  const [newName, setNewName] = useState("");
-  const [newAge, setNewAge] = useState("");
+  const inputNameRef = useRef();
+  const inputAgeRef = useRef();
 
-  const nameHandler = (event) => {
-    setNewName(event.target.value);
-  };
-  const ageHandler = (event) => {
-    setNewAge(event.target.value);
-  };
   const submitHandler = (event) => {
     event.preventDefault();
+    const enteredName = inputNameRef.current.value;
+    const enteredAge = inputAgeRef.current.value;
 
-    if (newName.trim().length !== 0 && newAge.trim().length !== 0) {
-      if (parseInt(newAge) > 0) {
-        const newUser = { id: Math.random(), name: newName, age: newAge };
+    if (enteredName.trim().length !== 0 && enteredAge.trim().length !== 0) {
+      if (parseInt(enteredAge) > 0) {
+        const newUser = {
+          id: Math.random(),
+          name: enteredName,
+          age: enteredAge,
+        };
         props.onNewUser(newUser);
-        setNewName("");
-        setNewAge("");
+        inputNameRef.current.value = "";
+        inputAgeRef.current.value = "";
       } else {
         props.onChangeWarningState({
           state: true,
@@ -73,24 +73,13 @@ const AddForm = (props) => {
             <label htmlFor="username">
               <b>Username</b>
             </label>
-            <input
-              id="username"
-              type="text"
-              onChange={nameHandler}
-              value={newName}
-            ></input>
+            <input id="username" type="text" ref={inputNameRef}></input>
           </div>
           <div className="input-control">
             <label htmlFor="age">
               <b>Age (Years)</b>
             </label>
-            <input
-              id="age"
-              type="number"
-              step="1"
-              onChange={ageHandler}
-              value={newAge}
-            ></input>
+            <input id="age" type="number" step="1" ref={inputAgeRef}></input>
           </div>
         </FormControl>
         <Button type="submit">Submit</Button>

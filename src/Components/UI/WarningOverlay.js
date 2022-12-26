@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Button from "./Button";
+import { createPortal } from "react-dom";
 
 const Overlay = styled.div`
   height: 100%;
@@ -8,7 +9,7 @@ const Overlay = styled.div`
   position: absolute;
   top: 0;
   /* display: none; */
-  display: ${props => props.hide? 'none' : 'block'};
+  display: ${(props) => (props.hide ? "none" : "block")};
 
   & .warning-dialogue {
     border-radius: 0.5em;
@@ -39,14 +40,15 @@ const WarningOverlay = (props) => {
     props.onChangeWarningState({ state: false, title: "", message: "" });
   };
 
-  return (
+  return createPortal(
     <Overlay hide={!props.stateObj.state}>
       <div className="warning-dialogue">
         <h2>{props.stateObj.title}</h2>
         <p>{props.stateObj.message}</p>
         <Button onClick={closeWarning}>Okay</Button>
       </div>
-    </Overlay>
+    </Overlay>,
+    document.getElementById("modal-root")
   );
 };
 
